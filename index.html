@@ -10,7 +10,7 @@
         margin: 0;
         padding: 0;
         background-color: #7393B3;
-        color: 333;
+        color: #333;
       }
       header {
         background-color: #7393B3;
@@ -46,10 +46,21 @@
       <p>Coming Soon™</p>
     </header>
     <main>
-      
+      <div id="visitor-message"></div>
     </main>
     <footer>
       ℹ This is licensed under a CC0-1.0 license, meaning this is open-source. Feel free to check out the source code <a href="https://github.com/Aratox-Official/UltraCalculator">here</a>.
     </footer>
+    <script>
+
+      function updateVisitorCount() {
+        let count = localStorage.getItem('visitorCount');
+        count = count ? parseInt(count, 10) + 1 : 1;
+        localStorage.setItem('visitorCount', count);
+        document.getElementById('visitor-message').innerText = `You are the ${count} member to visit this site.`;
+      }
+
+      window.onload = updateVisitorCount;
+    </script>
   </body>
 </html>
