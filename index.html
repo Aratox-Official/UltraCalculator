@@ -61,6 +61,12 @@
           <option value="Blue Ring">Blue Ring</option>
           <option value="Red Ring">Red Ring</option>
           <option value="FireBreath Ring">FireBreath Ring</option>
+          <option value="GoBattle Ring">GoBattle Ring</option>
+          <option value="Ring of Restoration">Ring of Restoration</option>
+          <option value="Bloodmoon Ring">Bloodmoon Ring</option>
+          <option value="Hermes Boots">Hermes Boots</option>
+          <option value="Speed Boots">Speed Boots</option>
+          <option value="Maximum Speed Boots">Maximum Speed Boots</option>
         </select>
 
         <p id="response"></p>
@@ -77,14 +83,32 @@
         const value = select.value;
         
         switch(value) {
-          case 'option1':
+          case 'Blue Ring':
             response.innerHTML = "You selected Blue Ring.";
             break;
-          case 'option2':
+          case 'Red Ring':
             response.innerHTML = "You selected Red Ring.";
             break;
-          case 'option3':
+          case 'FireBreath Ring':
             response.innerHTML = "You selected FireBreath Ring.";
+            break;
+          case 'GoBattle Ring':
+            response.innerHTML = "You selected GoBattle Ring.";
+            break;
+          case 'Ring of Restoration':
+            response.innerHTML = "You selected Ring of Restoration.";
+            break;
+          case 'Bloodmoon Ring':
+            response.innerHTML = "You selected Bloodmoon Ring.";
+            break;
+          case 'Hermes Boots':
+            response.innerHTML = "You selected Hermes Boots.";
+            break;
+          case 'Speed Boots':
+            response.innerHTML = "You selected Speed Boots.";
+            break;
+          case 'Maximum Speed Boots':
+            response.innerHTML = "You selected Maximum Speed Boots.";
             break;
           default:
             response.innerHTML = "";
