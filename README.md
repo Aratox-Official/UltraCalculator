@@ -1,6 +1,6 @@
 # UltraCalculator
 
-An ultrarare drop calculator for all of your gobattle.io fantasies.
+An ultrarare drop calculator for all of your gobattle.io fantasies. Web version link: [click here](https://aratox-official.github.io/UltraCalculator/)
 
 # Play the Game!
 
