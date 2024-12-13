@@ -11,7 +11,7 @@
         margin: 0;
         padding: 0;
         background-color: #7393B3;
-        color: 333;
+        color: #333; /* Fixing the color value */
       }
       header {
         background-color: #7393B3;
@@ -24,20 +24,25 @@
         text-align: center;
       }
       section {
-          margin: 1rem 0;
-          padding: 1rem;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          background-color: #fff;
+        margin: 1rem 0;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
       }
       footer {
-          background-color: #7393B3;
-          color: white;
-          text-align: center;
-          padding: 1rem;
-          position: fixed;
-          bottom: 0;
-          width: 100%;
+        background-color: #7393B3;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+      select {
+        padding: 0.5rem;
+        font-size: 16px;
+        margin-top: 1rem;
       }
     </style>
   </head>
@@ -47,10 +52,48 @@
       <p>Coming Soon™</p>
     </header>
     <main>
-      
+      <!-- Main content goes here -->
+      <section>
+        <p>Welcome to the Ultra Drop Calculator!</p>
+        <p>Select an ultra from the dropdown below:</p>
+        
+        <!-- Dropdown Menu -->
+        <select id="options" onchange="dropdownChanged()">
+          <option value="">Select an option</option>
+          <option value="Blue Ring">Blue Ring</option>
+          <option value="Red Ring">Red Ring</option>
+          <option value="FireBreath Ring">FireBreath Ring</option>
+        </select>
+
+        <!-- Placeholder for additional content that may change based on dropdown selection -->
+        <p id="response"></p>
+      </section>
     </main>
     <footer>
       ℹ This is licensed under a CC0-1.0 license, meaning this is open-source. Feel free to check out the source code <a href="https://github.com/Aratox-Official/UltraCalculator">here</a>.
     </footer>
+
+    <script>
+      function dropdownChanged() {
+        const select = document.getElementById("options");
+        const response = document.getElementById("response");
+        const value = select.value;
+        
+        switch(value) {
+          case 'option1':
+            response.innerHTML = "You selected Blue Ring.";
+            break;
+          case 'option2':
+            response.innerHTML = "You selected Red Ring.";
+            break;
+          case 'option3':
+            response.innerHTML = "You selected FireBreath Ring.";
+            break;
+          default:
+            response.innerHTML = "";
+            break;
+        }
+      }
+    </script>
   </body>
 </html>
