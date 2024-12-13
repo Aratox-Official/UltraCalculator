@@ -1,7 +1,11 @@
 # UltraCalculator
 
-An ultrarare calculator for all of your gobattle.io fantasies.
+An ultrarare drop calculator for all of your gobattle.io fantasies.
 
-# License
+# Play the Game!
 
-CC0-1.0 (Creative Commons 1.0 Universal)
+[GoBattle.io](https://gobattle.io/)
+
+## License
+
+[CC0-1.0 (Creative Commons 1.0 Universal)](https://github.com/Aratox-Official/UltraCalculator?tab=CC0-1.0-1-ov-file)
