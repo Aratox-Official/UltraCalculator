@@ -1,0 +1,266 @@
+[
+    {
+        "name": "GoBattle Ring",
+        "id": 68,
+        "tickets": 250,
+        "drops_in": "stahmite_mines"
+    },
+    {
+        "name": "Team Gravity Feather",
+        "id": 154,
+        "tickets": 500,
+        "drops_in": "cloudy_sky"
+    },
+    {
+        "name": "Breath Helmet",
+        "id": 74,
+        "tickets": 3000,
+        "drops_in": "underwater_magma_caves"
+    },
+    {
+        "name": "Peppermint Strike",
+        "id": 168,
+        "tickets": 1000,
+        "drops_in": "frostbite_dungeon"
+    },
+    {
+        "name": "Restoration Ring",
+        "id": 155,
+        "tickets": 500,
+        "drops_in": "skys_prison"
+    },
+    {
+        "name": "Rose Garden Ring",
+        "id": 262,
+        "tickets": 250,
+        "drops_in": "nirahs_den"
+    },
+    {
+        "name": "Blaze Throw",
+        "id": 263,
+        "tickets": 500,
+        "drops_in": "krakopus_cave"
+    },
+    {
+        "name": "Gravity Feather",
+        "id": 51,
+        "tickets": 1000,
+        "drops_in": "spiders_nest"
+    },
+    {
+        "name": "FireBreath Ring",
+        "id": 114,
+        "tickets": 250,
+        "drops_in": "firebreaths_lair"
+    },
+    {
+        "name": "Instant Strength Glove",
+        "id": 14,
+        "tickets": 3000,
+        "drops_in": "dark_caves"
+    },
+    {
+        "name": "Bloodmoon Ring",
+        "id": 166,
+        "tickets": 1000,
+        "drops_in": "bloodmoon_castle"
+    },
+    {
+        "name": "Lava Armor Protector",
+        "id": 48,
+        "tickets": 2000,
+        "drops_in": "sir_valkans_stronghold"
+    },
+    {
+        "name": "Instant Defense Cloak",
+        "id": 20,
+        "tickets": 3000,
+        "drops_in": "sir_valkans_stronghold"
+    },
+    {
+        "name": "Maximum Speed Boots",
+        "id": 26,
+        "tickets": 3000,
+        "drops_in": "dragonblood"
+    },
+    {
+        "name": "Maximum Fire Protection Cloak",
+        "id": 33,
+        "tickets": 2000,
+        "drops_in": "magma_caves"
+    },
+    {
+        "name": "Fire Protection Cloak",
+        "id": 32,
+        "tickets": 3000,
+        "drops_in": "dragonblood"
+    },
+    {
+        "name": "Extraordinary Venom Protection Cloak",
+        "id": 36,
+        "tickets": 2000,
+        "drops_in": "spiders_nest"
+    },
+    {
+        "name": "Anti Freezing Glove",
+        "id": 45,
+        "tickets": 3000,
+        "drops_in": "magma_caves"
+    },
+    {
+        "name": "Blue Dragon Ring",
+        "id": 2,
+        "tickets": 500,
+        "drops_in": "all"
+    },
+    {
+        "name": "Epic Strength Glove",
+        "id": 15,
+        "tickets": 2000,
+        "drops_in": "asterions_labyrinth"
+    },
+    {
+        "name": "Firebreath's Blood",
+        "id": 115,
+        "tickets": 2000,
+        "drops_in": "firebreaths_lair"
+    },
+    {
+        "name": "Red Dragon Ring",
+        "id": 3,
+        "tickets": 500,
+        "drops_in": "all"
+    },
+    {
+        "name": "Normal Health Regeneration Cloak",
+        "id": 30,
+        "tickets": 3000,
+        "drops_in": "sawmill"
+    },
+    {
+        "name": "Maximum Health Regeneration Cloak",
+        "id": 31,
+        "tickets": 2000,
+        "drops_in": "asterions_labyrinth"
+    },
+    {
+        "name": "Anti Fire Enchantment",
+        "id": 116,
+        "tickets": 100,
+        "drops_in": "all"
+    },
+    {
+        "name": "Speed Boots",
+        "id": 25,
+        "tickets": 3000,
+        "drops_in": "ravanors_land"
+    },
+    {
+        "name": "Epic Instant Defense Cloak",
+        "id": 21,
+        "tickets": 3000,
+        "drops_in": "enchanted_forest"
+    },
+    {
+        "name": "Normal Venom Protection Cloak",
+        "id": 35,
+        "tickets": 3000,
+        "drops_in": "enchanted_forest"
+    },
+    {
+        "name": "Normal Invisibility Cloak",
+        "id": 4,
+        "tickets": 3000,
+        "drops_in": "all"
+    },
+    {
+        "name": "Extreme Invisibility Cloak",
+        "id": 42,
+        "tickets": 3000,
+        "drops_in": "all"
+    },
+    {
+        "name": "Hermes Boots",
+        "id": 6,
+        "tickets": 4000,
+        "drops_in": "all"
+    },
+    {
+        "name": "Epic Invincibility Potion",
+        "id": 39,
+        "tickets": 5000,
+        "drops_in": "all"
+    },
+    {
+        "name": "Greed's Grip",
+        "id": 186,
+        "tickets": 100,
+        "drops_in": "all"
+    },
+    {
+        "name": "Dwarf's Strength",
+        "id": 187,
+        "tickets": 100,
+        "drops_in": "sawmill"
+    },
+    {
+        "name": "Flying Skill",
+        "id": 198,
+        "tickets": 10,
+        "drops_in": "all"
+    },
+    {
+        "name": "Dice of Destiny",
+        "id": 182,
+        "tickets": 500,
+        "drops_in": "all"
+    },
+    {
+        "name": "Iron Heart",
+        "id": 183,
+        "tickets": 500,
+        "drops_in": "all"
+    },
+    {
+        "name": "Rejuvenation Gem",
+        "id": 184,
+        "tickets": 500,
+        "drops_in": "all"
+    },
+    {
+        "name": "Inferno Touch",
+        "id": 185,
+        "tickets": 300,
+        "drops_in": "all"
+    },
+    {
+        "name": "Dodge Charm",
+        "id": 189,
+        "tickets": 100,
+        "drops_in": "asterions_labyrinth"
+    },
+    {
+        "name": "Wizard's Focus",
+        "id": 190,
+        "tickets": 100,
+        "drops_in": "dark_caves"
+    },
+    {
+        "name": "Gem Dust",
+        "id": 191,
+        "tickets": 50,
+        "drops_in": "stahmite_mines"
+    },
+    {
+        "name": "Shinobi's Fury",
+        "id": 188,
+        "tickets": 100,
+        "drops_in": "dancie_spikes"
+    },
+    {
+        "name": "Talisman of the Phoenix",
+        "id": 161,
+        "tickets": 200,
+        "drops_in": "firebreaths_lair"
+    }
+]
