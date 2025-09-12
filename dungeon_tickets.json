@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Stahmite Mines",
+    "id": 31,
+    "tickets": 18310
+  },
+  {
+    "name": "Cloudy Sky",
+    "id": 52,
+    "tickets": 18510
+  },
+  {
+    "name": "Underwater Magma Caves",
+    "id": 28,
+    "tickets": 21010
+  },
+  {
+    "name": "Frostbite Dungeon",
+    "id": 57,
+    "tickets": 19010
+  },
+  {
+    "name": "Sky's Prison",
+    "id": 41,
+    "tickets": 18510
+  },
+  {
+    "name": "Nirah's Den",
+    "id": 69,
+    "tickets": 18260
+  },
+  {
+    "name": "Spider's Nest",
+    "id": 12,
+    "tickets": 21010
+  },
+  {
+    "name": "Firebreath's Lair",
+    "id": 15,
+    "tickets": 20460
+  },
+  {
+    "name": "Dark Caves",
+    "id": 27,
+    "tickets": 21110
+  },
+  {
+    "name": "Bloodmoon Castle",
+    "id": 46,
+    "tickets": 19010
+  },
+  {
+    "name": "Sir Valkan's Stronghold",
+    "id": 18,
+    "tickets": 23010
+  },
+  {
+    "name": "DragonBlood",
+    "id": 17,
+    "tickets": 24010
+  },
+  {
+    "name": "Magma Caves",
+    "id": 14,
+    "tickets": 23010
+  },
+  {
+    "name": "Sawmill",
+    "id": 13,
+    "tickets": 21110
+  },
+  {
+    "name": "Asterion's Labyrinth",
+    "id": 16,
+    "tickets": 22110
+  },
+  {
+    "name": "DanCie Spikes",
+    "id": 35,
+    "tickets": 18110
+  },
+  {
+    "name": "Enchanted Forest",
+    "id": 10,
+    "tickets": 24010
+  },
+  {
+    "name": "Ravanors Land",
+    "id": 20,
+    "tickets": 21010
+  },
+  {
+    "name": "All",
+    "id": 8,
+    "tickets": 18010
+  }
+]
