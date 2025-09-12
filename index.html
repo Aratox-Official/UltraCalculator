@@ -79,7 +79,7 @@
       let ultraData = {};
 
       async function loadData() {
-        const res = await fetch("dungeon_tickets.json");
+        const res = await fetch("ultra_names.json");
         ultraData = await res.json();
 
         const select = document.getElementById("options");
