@@ -62,157 +62,55 @@
       <p>Coming Soon™</p>
     </header>
     <main>
-      <!-- Main content goes here -->
       <section>
         <p>Welcome to the Ultra Drop Calculator!</p>
         <p>Select an ultra from the dropdown below:</p>
         
-        <!-- Dropdown Menu -->
-        <select id="options" onchange="dropdownChanged()">
-          <option value="">Select an option</option>
-          <option value="Blue Ring">Blue Ring</option>
-          <option value="Red Ring">Red Ring</option>
-          <option value="FireBreath Ring">FireBreath Ring</option>
-          <option value="GoBattle Ring">GoBattle Ring</option>
-          <option value="Ring of Restoration">Ring of Restoration</option>
-          <option value="Bloodmoon Ring">Bloodmoon Ring</option>
-          <option value="Hermes Boots">Hermes Boots</option>
-          <option value="Speed Boots">Speed Boots</option>
-          <option value="Maximum Speed Boots">Maximum Speed Boots</option>
-          <option value="Normal Invisibility Cloak">Normal Invisibility Cloak</option>
-          <option value="Extreme Invisibility Cloak">Extreme Invisibility Cloak</option>
-          <option value="Instant Defense Cloak">Instant Defense Cloak</option>
-          <option value="Epic Instant Defense Cloak">Epic Instant Defense Cloak</option>
-          <option value="Normal Health Regeneration Cloak">Normal Health Regeneration Cloak</option>
-          <option value="Max Health Regeneration Cloak">Max Health Regeneration Cloak</option>
-          <option value="Normal Venom Protection Cloak">Normal Venom Protection Cloak</option>
-          <option value="Extraordinary Venom Protection Cloak">Extraordinary Venom Protection Cloak</option>
-          <option value="Fire Protection Cloak">Fire Protection Cloak</option>
-          <option value="Maximum Fire Protection Cloak">Maximum Fire Protection Cloak</option>
-          <option value="Anti Freezing Glove">Anti Freezing Glove</option>
-          <option value="Instant Strength Glove">Instant Strength Glove</option>
-          <option value="Epic Strength Glove">Epic Strength Glove</option>
-          <option value="Epic Invincibility Potion">Epic Invincibility Potion</option>
-          <option value="Firebreath's Blood">Firebreath's Blood</option>
-          <option value="Gravity Feather">Gravity Feather</option>
-          <option value="Team Gravity Feather">Team Gravity Feather</option>
-          <option value="Lava Armor Protector">Lava Armor Protector</option>
-          <option value="Breath Helmet">Breath Helmet</option>
-          <option value="Fire Enchantment">Fire Enchantment</option>
-          <option value="Peppermint Strike">Peppermint Strike</option>
-        </select>
-
+        <select id="options"></select>
         <p id="response"></p>
       </section>
     </main>
     <footer>
-      ℹ This is licensed under a CC0-1.0 license, meaning this is open-source. 
-      Feel free to check out the source code 
-      <a href="https://github.com/Aratox-Official/UltraCalculator">here</a>.
+      ℹ This is licensed under a CC0-1.0 license. 
+      Source code <a href="https://github.com/Aratox-Official/UltraCalculator">here</a>.
     </footer>
 
     <script>
+      let ultraData = {};
+
+      async function loadData() {
+        const res = await fetch("dungeon_tickets.json");
+        ultraData = await res.json();
+
+        const select = document.getElementById("options");
+        select.innerHTML = '<option value="">Select an option</option>';
+
+        Object.keys(ultraData).forEach(name => {
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = name;
+          select.appendChild(option);
+        });
+
+        select.addEventListener("change", dropdownChanged);
+      }
+
       function dropdownChanged() {
         const select = document.getElementById("options");
         const response = document.getElementById("response");
         const value = select.value;
-        
-        switch(value) {
-          case 'Blue Ring':
-            response.innerHTML = "You have a raw chance of 0.05% of getting this ultra.<br><br>Tickets: 500";
-            break;
-          case 'Red Ring':
-            response.innerHTML = "You have a raw chance of 0.05% of getting this ultra.<br><br>Tickets: 500";
-            break;
-          case 'FireBreath Ring':
-            response.innerHTML = "You have a raw chance of 0.024% of getting this ultra.<br><br>Tickets: 250";
-            break;
-          case 'GoBattle Ring':
-            response.innerHTML = "You have a raw chance of 0.024% of getting this ultra.<br><br>Tickets: 250";
-            break;
-          case 'Ring of Restoration':
-            response.innerHTML = "You have a raw chance of 0.048% of getting this ultra.<br><br>Tickets: 500";
-            break;
-          case 'Bloodmoon Ring':
-            response.innerHTML = "You have a raw chance of 0.094% of getting this ultra.<br><br>Tickets: 1000";
-            break;
-          case 'Hermes Boots':
-            response.innerHTML = "You have a raw chance of 0.398% of getting this ultra.<br><br>Tickets: 4000";
-            break;
-          case 'Speed Boots':
-            response.innerHTML = "You have a raw chance of 0.251% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Maximum Speed Boots':
-            response.innerHTML = "You have a raw chance of 0.217% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Normal Invisibility Cloak':
-            response.innerHTML = "You have a raw chance of 0.298% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Extreme Invisibility Cloak':
-            response.innerHTML = "You have a raw chance of 0.298% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Instant Defense Cloak':
-            response.innerHTML = "You have a raw chance of 0.217% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Epic Instant Defense Cloak':
-            response.innerHTML = "You have a raw chance of 0.217% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Normal Health Regeneration Cloak':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Max Health Regeneration Cloak':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 2000";
-            break;
-          case 'Normal Venom Protection Cloak':
-            response.innerHTML = "You have a raw chance of 0.217% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Extraordinary Venom Protection Cloak':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 2000";
-            break;
-          case 'Fire Protection Cloak':
-            response.innerHTML = "You have a raw chance of 0.217% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Maximum Fire Protection Cloak':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 2000";
-            break;
-          case 'Anti Freezing Glove':
-            response.innerHTML = "You have a raw chance of 0.217% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Instant Strength Glove':
-            response.innerHTML = "You have a raw chance of 0.251% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Epic Strength Glove':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 2000";
-            break;
-          case 'Epic Invincibility Potion':
-            response.innerHTML = "You have a raw chance of 0.497% of getting this ultra.<br><br>Tickets: 5000";
-            break;
-          case 'Firebreath\'s Blood':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 2000";
-            break;
-          case 'Gravity Feather':
-            response.innerHTML = "You have a raw chance of 0.088% of getting this ultra.<br><br>Tickets: 1000";
-            break;
-          case 'Team Gravity Feather':
-            response.innerHTML = "You have a raw chance of 0.048% of getting this ultra.<br><br>Tickets: 500";
-            break;
-          case 'Lava Armor Protector':
-            response.innerHTML = "You have a raw chance of 0.159% of getting this ultra.<br><br>Tickets: 2000";
-            break;
-          case 'Breath Helmet':
-            response.innerHTML = "You have a raw chance of 0.251% of getting this ultra.<br><br>Tickets: 3000";
-            break;
-          case 'Fire Enchantment':
-            response.innerHTML = "You have a raw chance of 0.01% of getting this ultra.<br><br>Tickets: 100";
-            break;
-          case 'Peppermint Strike':
-            response.innerHTML = "You have a raw chance of 0.191% of getting this ultra.<br><br>Tickets: 1000";
-            break;
-          default:
-            response.innerHTML = "";
-            break;
+
+        if (value && ultraData[value]) {
+          const { chance, tickets } = ultraData[value];
+          response.innerHTML = 
+            `You have a raw chance of ${chance}% of getting this ultra.<br><br>` +
+            `Tickets: ${tickets}`;
+        } else {
+          response.innerHTML = "";
         }
       }
+
+      loadData();
     </script>
   </body>
 </html>
