@@ -36,7 +36,7 @@
         background-color: #7393B3;
         margin: 2rem auto;
         padding: 2rem;
-        max-width: 600px;
+        max-width: 650px;
         border-radius: 12px;
       }
       footer {
@@ -48,7 +48,7 @@
         bottom: 0;
         width: 100%;
       }
-      select {
+      select, input[type="number"] {
         font-family: Compass;
         padding: 0.5rem;
         font-weight: bold;
@@ -71,9 +71,12 @@
     <main>
       <section>
         <p>Welcome to the Ultra Drop Calculator!</p>
-        <p>Select an ultra from the dropdown below:</p>
+        <p>Select an ultra and enter your luck stat:</p>
         
-        <select id="options"></select>
+        <select id="options"></select><br>
+        <label for="luck">Luck (LCK): </label>
+        <input type="number" id="luck" min="0" max="25" value="0"><br>
+
         <p id="response"></p>
       </section>
     </main>
@@ -84,39 +87,61 @@
 
     <script>
       let ultraData = [];
+      let dungeonData = [];
 
       async function loadData() {
-        const res = await fetch("ultra_names.json");
-        ultraData = await res.json();
+        const ultraRes = await fetch("ultra_names.json");
+        ultraData = await ultraRes.json();
+
+        const dungeonRes = await fetch("dungeon_list.json");
+        dungeonData = await dungeonRes.json();
 
         const select = document.getElementById("options");
         select.innerHTML = '<option value="">Select an option</option>';
 
-        // Sort ultras alphabetically by name
         ultraData
           .sort((a, b) => a.name.localeCompare(b.name))
           .forEach(item => {
             const option = document.createElement("option");
-            option.value = item.id; // use ID for lookup
+            option.value = item.id;
             option.textContent = item.name;
             select.appendChild(option);
           });
 
-        select.addEventListener("change", dropdownChanged);
+        select.addEventListener("change", calculateDropRate);
+        document.getElementById("luck").addEventListener("input", calculateDropRate);
       }
 
-      function dropdownChanged() {
+      function calculateDropRate() {
         const select = document.getElementById("options");
         const response = document.getElementById("response");
         const selectedId = parseInt(select.value, 10);
+        const luck = Math.min(parseInt(document.getElementById("luck").value, 10) || 0, 25);
 
         const item = ultraData.find(u => u.id === selectedId);
 
         if (item) {
-          response.innerHTML = 
-            `<strong>${item.name}</strong><br><br>` +
-            `Tickets: ${item.tickets}<br>` +
-            `Drops in: ${item.drops_in.replaceAll("_", " ")}`;
+          const dungeon = dungeonData.find(d => d.id === item.drops_in);
+
+          if (dungeon) {
+            const ultraTickets = item.tickets;
+            const dungeonTickets = dungeon.tickets;
+
+            const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * luck) + 0.006);
+
+            response.innerHTML = 
+              `<strong>${item.name}</strong><br><br>` +
+              `Tickets: ${ultraTickets}<br>` +
+              `Drops in: ${item.drops_in.replaceAll("_", " ")}<br><br>` +
+              `With <strong>${luck} LCK</strong>, your drop chance is: <br>` +
+              `<span style="font-size:20px; font-weight:bold;">${dropChance.toFixed(4)}%</span>`;
+          } else {
+            response.innerHTML = 
+              `<strong>${item.name}</strong><br><br>` +
+              `Tickets: ${item.tickets}<br>` +
+              `Drops in: ${item.drops_in.replaceAll("_", " ")}<br><br>` +
+              `⚠ Dungeon data not found.`;
+          }
         } else {
           response.innerHTML = "";
         }
