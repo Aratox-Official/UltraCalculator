@@ -46,27 +46,26 @@
 
       main {
         flex: 1 0 auto;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding: 2rem;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 1rem;
       }
 
       .panel {
         background: var(--panel-bg);
         padding: 1.5rem;
         border-radius: 12px;
-        max-width: 760px;
+        max-width: 480px;
         width: 100%;
         box-shadow: 0 6px 18px rgba(0,0,0,0.35);
         color: #fff;
       }
 
-      .row {
-        display:flex;
-        gap: 12px;
-        align-items:center;
-        flex-wrap:wrap;
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 14px;
       }
 
       label {
@@ -84,9 +83,7 @@
         outline: none;
       }
 
-      select, input[type="number"] { min-width: 220px; }
-
-      .controls { margin-top: 8px; display:flex; gap: 10px; flex-wrap:wrap; }
+      select, input[type="number"] { width: 100%; }
 
       button#generateBtn {
         background: var(--btn-color);
@@ -94,6 +91,8 @@
         cursor: pointer;
         font-weight:700;
         transition: background 0.2s;
+        width: 100%;
+        margin-top: 6px;
       }
       button#generateBtn:hover {
         background: #6A1BB2;
@@ -116,15 +115,8 @@
         color: white;
         text-align: center;
         padding: 0.75rem;
-        position: relative;
-        bottom: 0;
-        width: 100%;
         font-size: 14px;
-      }
-
-      @media (max-width: 520px) {
-        select, input[type="number"] { min-width: 100%; }
-        .controls { flex-direction: column; }
+        margin-top: auto;
       }
     </style>
   </head>
@@ -132,42 +124,35 @@
   <body>
     <header>
       <h1>Ultra Drop Calculator</h1>
-      <p style="margin:0;color:rgba(255,255,255,0.9)">Select dungeon & ultra → enter Luck → click Generate</p>
     </header>
 
     <main>
-      <section class="panel" aria-labelledby="panelTitle">
-        <h2 id="panelTitle" style="margin-top:0;color:#fff">Calculator</h2>
+      <section class="panel">
 
-        <div class="row" style="margin-bottom:10px;">
-          <div style="flex:1 1 260px;">
-            <label for="dungeonSelect">Dungeon</label>
-            <select id="dungeonSelect"><option>Loading…</option></select>
-          </div>
-
-          <div style="flex:1 1 260px;">
-            <label for="ultraSelect">Ultra</label>
-            <select id="ultraSelect"><option>Loading…</option></select>
-          </div>
+        <div class="form-group">
+          <label for="dungeonSelect">Dungeon</label>
+          <select id="dungeonSelect"><option>Loading…</option></select>
         </div>
 
-        <div class="row controls">
-          <div>
-            <label for="luckInput">Luck (LCK) — 0 to 25</label>
-            <input id="luckInput" type="number" min="0" max="25" value="0" />
-          </div>
-
-          <div style="align-self:flex-end;">
-            <button id="generateBtn" type="button">Generate Ultra Data</button>
-          </div>
+        <div class="form-group">
+          <label for="ultraSelect">Ultra</label>
+          <select id="ultraSelect"><option>Loading…</option></select>
         </div>
+
+        <div class="form-group">
+          <label for="luckInput">Luck (LCK) — 0 to 25</label>
+          <input id="luckInput" type="number" min="0" max="25" value="0" />
+        </div>
+
+        <button id="generateBtn" type="button">Generate Ultra Data</button>
 
         <div id="response" aria-live="polite"></div>
       </section>
     </main>
 
     <footer>
-      ℹ Licensed under CC0-1.0. Source: <a href="https://github.com/Aratox-Official/UltraCalculator" style="color:inherit;text-decoration:underline">GitHub</a>
+      ℹ Licensed under CC0-1.0. Source: 
+      <a href="https://github.com/Aratox-Official/UltraCalculator" style="color:inherit;text-decoration:underline">GitHub</a>
     </footer>
 
     <script>
