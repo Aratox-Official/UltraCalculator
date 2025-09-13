@@ -20,9 +20,7 @@
         --text: #111;
       }
 
-      html, body {
-        height: 100%;
-      }
+      html, body { height: 100%; }
 
       body {
         font-family: Compass, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -85,16 +83,9 @@
         outline: none;
       }
 
-      select, input[type="number"] {
-        min-width: 220px;
-      }
+      select, input[type="number"] { min-width: 220px; }
 
-      .controls {
-        margin-top: 8px;
-        display:flex;
-        gap: 10px;
-        flex-wrap:wrap;
-      }
+      .controls { margin-top: 8px; display:flex; gap: 10px; flex-wrap:wrap; }
 
       button#generateBtn {
         background: #4CAF50;
@@ -182,6 +173,12 @@
           .replace(/[^a-z0-9_]/g, "");
       }
 
+      function formatAverageRuns(v) {
+        if (!isFinite(v)) return "Impossible (drop chance = 0)";
+        if (v < 1000) return `${v.toFixed(2)} runs (average)`;
+        return `${Math.round(v).toLocaleString()} runs (average)`;
+      }
+
       let ultraData = [];
       let dungeonData = [];
 
@@ -199,7 +196,7 @@
           ]);
 
           if (!uRes.ok) throw new Error("Failed to load ultra_names.json");
-          if (!dRes.ok) throw new Error("Failed to load dungeon_list.json");
+          if (!dRes.ok) throw new Error("Failed to load dungeon_tickets.json");
 
           ultraData = await uRes.json();
           dungeonData = await dRes.json();
@@ -233,7 +230,6 @@
 
       function populateUltraSelect() {
         ultraData.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-
         ultraSelect.innerHTML = '<option value="">-- Select an ultra --</option>';
         ultraData.forEach(u => {
           const option = document.createElement("option");
@@ -270,14 +266,12 @@
 
         const ultra = ultraData.find(u => {
           if (!u) return false;
-          if (typeof u.id !== "undefined") {
-            return String(u.id) === ultraValue;
-          }
+          if (typeof u.id !== "undefined") return String(u.id) === ultraValue;
           return u.name === ultraValue;
         });
 
         if (!dungeon) {
-          responseEl.innerHTML = `<strong>Selected dungeon not found in dungeon_list.json.</strong>`;
+          responseEl.innerHTML = `<strong>Selected dungeon not found in dungeon data.</strong>`;
           return;
         }
         if (!ultra) {
@@ -295,6 +289,9 @@
 
         const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * luck) + 0.006);
 
+        const avgRuns = (dropChance > 0) ? (100 / dropChance) : Infinity;
+        const avgRunsText = formatAverageRuns(avgRuns);
+
         const ultraDropsIn = (ultra.drops_in || "").toString();
         const dungeonSlug = slugify(dungeon.name || dungeon.id || "");
         const dropsMatch = (
@@ -307,13 +304,13 @@
         const prettyDungeonName = (dungeon.name || dungeon.id || "").toString().replace(/_/g, " ");
         const prettyDropsIn = (ultra.drops_in || "").toString().replace(/_/g, " ");
 
-        let html = `<strong>${ultra.name}</strong> — Tickets: <strong>${ultraTickets}</strong><br>`;
-        html += `Dungeon: <strong>${prettyDungeonName}</strong> — Dungeon tickets: <strong>${dungeonTickets}</strong><br><br>`;
+        let html = `<strong>${ultra.name}</strong><br>`;
+        html += `Dungeon: <strong>${prettyDungeonName}</strong><br><br>`;
         html += `Luck (LCK): <strong>${luck}</strong><br>`;
-        html += `<div style="margin-top:8px;font-size:1.15em">Calculated drop chance: <strong>${dropChance.toFixed(4)}%</strong></div>`;
+        html += `<div style="margin-top:8px;font-size:1.15em">Average runs required: <strong>${avgRunsText}</strong></div>`;
 
         if (!dropsMatch) {
-          html += `<div style="margin-top:10px;color:#ffeb99">Note: this ultra normally drops in <strong>${prettyDropsIn || "another dungeon"}</strong>. You selected <strong>${prettyDungeonName}</strong>. Calculation uses the selected dungeon's ticket total.</div>`;
+          html += `<div style="margin-top:10px;color:#ffeb99">Note: this ultra normally drops in <strong>${prettyDropsIn || "another dungeon"}</strong>. You selected <strong>${prettyDungeonName}</strong>. Calculation used the selected dungeon's ticket total.</div>`;
         }
 
         responseEl.innerHTML = html;
