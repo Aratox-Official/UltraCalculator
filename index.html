@@ -195,7 +195,7 @@
         try {
           const [uRes, dRes] = await Promise.all([
             fetch("ultra_names.json"),
-            fetch("dungeon_list.json")
+            fetch("dungeon_tickets.json")
           ]);
 
           if (!uRes.ok) throw new Error("Failed to load ultra_names.json");
