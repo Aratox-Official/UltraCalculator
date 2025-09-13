@@ -18,6 +18,7 @@
         --panel-bg: rgba(115, 147, 179, 0.92);
         --accent: #7393B3;
         --text: #111;
+        --btn-color: #8A2BE2;
       }
 
       html, body { height: 100%; }
@@ -88,10 +89,14 @@
       .controls { margin-top: 8px; display:flex; gap: 10px; flex-wrap:wrap; }
 
       button#generateBtn {
-        background: #4CAF50;
+        background: var(--btn-color);
         color: white;
         cursor: pointer;
         font-weight:700;
+        transition: background 0.2s;
+      }
+      button#generateBtn:hover {
+        background: #6A1BB2;
       }
       button#generateBtn:active { transform: translateY(1px); }
 
@@ -103,6 +108,7 @@
         color: white;
         font-size: 16px;
         line-height: 1.4;
+        min-height: 40px;
       }
 
       footer {
@@ -240,6 +246,8 @@
       }
 
       generateBtn.addEventListener("click", () => {
+        responseEl.innerHTML = "";
+
         if (!ultraData.length || !dungeonData.length) {
           responseEl.textContent = "Data not loaded yet. Please wait a moment and try again.";
           return;
