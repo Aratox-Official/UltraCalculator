@@ -34,8 +34,10 @@
       }
       section {
         background-color: #7393B3;
-        margin: 2rem 0;
+        margin: 2rem auto;
         padding: 2rem;
+        max-width: 600px;
+        border-radius: 12px;
       }
       footer {
         background-color: #7393B3;
@@ -53,6 +55,11 @@
         font-style: normal;
         font-size: 16px;
         margin-top: 1rem;
+      }
+      #response {
+        margin-top: 1.5rem;
+        font-size: 18px;
+        line-height: 1.6;
       }
     </style>
   </head>
@@ -76,7 +83,7 @@
     </footer>
 
     <script>
-      let ultraData = {};
+      let ultraData = [];
 
       async function loadData() {
         const res = await fetch("ultra_names.json");
@@ -85,12 +92,15 @@
         const select = document.getElementById("options");
         select.innerHTML = '<option value="">Select an option</option>';
 
-        Object.keys(ultraData).forEach(name => {
-          const option = document.createElement("option");
-          option.value = name;
-          option.textContent = name;
-          select.appendChild(option);
-        });
+        // Sort ultras alphabetically by name
+        ultraData
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .forEach(item => {
+            const option = document.createElement("option");
+            option.value = item.id; // use ID for lookup
+            option.textContent = item.name;
+            select.appendChild(option);
+          });
 
         select.addEventListener("change", dropdownChanged);
       }
@@ -98,13 +108,15 @@
       function dropdownChanged() {
         const select = document.getElementById("options");
         const response = document.getElementById("response");
-        const value = select.value;
+        const selectedId = parseInt(select.value, 10);
 
-        if (value && ultraData[value]) {
-          const { chance, tickets } = ultraData[value];
+        const item = ultraData.find(u => u.id === selectedId);
+
+        if (item) {
           response.innerHTML = 
-            `You have a raw chance of ${chance}% of getting this ultra.<br><br>` +
-            `Tickets: ${tickets}`;
+            `<strong>${item.name}</strong><br><br>` +
+            `Tickets: ${item.tickets}<br>` +
+            `Drops in: ${item.drops_in.replaceAll("_", " ")}`;
         } else {
           response.innerHTML = "";
         }
