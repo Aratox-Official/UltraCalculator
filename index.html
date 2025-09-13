@@ -47,8 +47,8 @@
       main {
         flex: 1 0 auto;
         display: flex;
-        align-items: flex-start;
         justify-content: center;
+        align-items: flex-start;
         padding: 1rem;
       }
 
@@ -60,6 +60,7 @@
         width: 100%;
         box-shadow: 0 6px 18px rgba(0,0,0,0.35);
         color: #fff;
+        margin-top: 0.5rem;
       }
 
       .form-group {
@@ -83,7 +84,11 @@
         outline: none;
       }
 
-      select, input[type="number"] { width: 100%; }
+      select { width: 100%; }
+
+      input[type="number"] {
+        width: 120px;
+      }
 
       button#generateBtn {
         background: var(--btn-color);
