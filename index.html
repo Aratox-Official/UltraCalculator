@@ -145,11 +145,11 @@
         </div>
 
         <div class="form-group">
-          <label for="luckInput">Luck (LCK) — 0 to 25</label>
+          <label for="luckInput">Luck (LCK)</label>
           <input id="luckInput" type="number" min="0" max="25" value="0" />
         </div>
 
-        <button id="generateBtn" type="button">Generate Ultra Data</button>
+        <button id="generateBtn" type="button">Calculate</button>
 
         <div id="response" aria-live="polite"></div>
       </section>
@@ -307,8 +307,7 @@
         const prettyDungeonName = (dungeon.name || dungeon.id || "").toString().replace(/_/g, " ");
         const prettyDropsIn = (ultra.drops_in || "").toString().replace(/_/g, " ");
 
-        let html = `<strong>${ultra.name}</strong><br>`;
-        html += `Dungeon: <strong>${prettyDungeonName}</strong><br><br>`;
+        let html = ``;
         html += `Luck (LCK): <strong>${luck}</strong><br>`;
         html += `<div style="margin-top:8px;font-size:1.15em">Average runs required: <strong>${avgRunsText}</strong></div>`;
 
