@@ -1,153 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultrarare Calculator</title>
-    <link rel="shortcut icon" type="image/x-icon" href="gobattle_ring.ico">
-    <style>
-      @font-face {
-        font-family: Compass;
-        src: url("../../UltraCalculator/compass.ttf") format('truetype');
-        font-weight: bold;
-        font-style: normal;
-      }
-      body {
-        font-family: Compass;
-        margin: 0;
-        padding: 0;
-        background-image: url("../../UltraCalculator/gb_stars.png");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-        color: #333;
-      }
-      header {
-        color: white;
-        padding: 1rem;
-        text-align: center;
-      }
-      main {
-        padding: 2rem;
-        text-align: center;
-      }
-      section {
-        background-color: #7393B3;
-        margin: 2rem auto;
-        padding: 2rem;
-        max-width: 650px;
-        border-radius: 12px;
-      }
-      footer {
-        background-color: #7393B3;
-        color: white;
-        text-align: center;
-        padding: 1rem;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-      }
-      select, input[type="number"] {
-        font-family: Compass;
-        padding: 0.5rem;
-        font-weight: bold;
-        font-style: normal;
-        font-size: 16px;
-        margin-top: 1rem;
-      }
-      #response {
-        margin-top: 1.5rem;
-        font-size: 18px;
-        line-height: 1.6;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Ultra Drop Calculator</h1>
-      <p>Coming Soon™</p>
-    </header>
-    <main>
-      <section>
-        <p>Welcome to the Ultra Drop Calculator!</p>
-        <p>Select an ultra and enter your luck stat:</p>
-        
-        <select id="options"></select><br>
-        <label for="luck">Luck (LCK): </label>
-        <input type="number" id="luck" min="0" max="25" value="0"><br>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultra Calculator</title>
+  <style>
+    body {
+      font-family: Compass, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url("../../UltraCalculator/gb_stars.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      color: #fff;
+      text-align: center;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 50px;
+    }
+    select, input, button {
+      margin: 10px;
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ultra Calculator</h1>
 
-        <p id="response"></p>
-      </section>
-    </main>
-    <footer>
-      ℹ This is licensed under a CC0-1.0 license. 
-      Source code <a href="https://github.com/Aratox-Official/UltraCalculator">here</a>.
-    </footer>
+    <label for="dungeonSelect">Choose Dungeon:</label>
+    <select id="dungeonSelect"></select>
+    <br>
 
-    <script>
-      let ultraData = [];
-      let dungeonData = [];
+    <label for="ultraSelect">Choose Ultra:</label>
+    <select id="ultraSelect"></select>
+    <br>
 
-      async function loadData() {
-        const ultraRes = await fetch("ultra_names.json");
-        ultraData = await ultraRes.json();
+    <label for="luckInput">Luck (0–25):</label>
+    <input type="number" id="luckInput" min="0" max="25" value="0">
+    <br>
 
-        const dungeonRes = await fetch("dungeon_tickets.json");
-        dungeonData = await dungeonRes.json();
+    <button id="generateBtn">Generate Ultra Data</button>
 
-        const select = document.getElementById("options");
-        select.innerHTML = '<option value="">Select an option</option>';
+    <h2 id="result"></h2>
+  </div>
 
-        ultraData
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .forEach(item => {
-            const option = document.createElement("option");
-            option.value = item.id;
-            option.textContent = item.name;
-            select.appendChild(option);
-          });
+  <script>
+    let dungeons = [];
+    let ultras = {};
 
-        select.addEventListener("change", calculateDropRate);
-        document.getElementById("luck").addEventListener("input", calculateDropRate);
+    // Load dungeon data
+    fetch('dungeon_tickets.json')
+      .then(response => response.json())
+      .then(data => {
+        dungeons = data;
+        const dungeonSelect = document.getElementById('dungeonSelect');
+        data.forEach(dungeon => {
+          const option = document.createElement('option');
+          option.value = dungeon.name;
+          option.textContent = dungeon.name;
+          dungeonSelect.appendChild(option);
+        });
+      });
+
+    fetch('ultra_ticket_data.json')
+      .then(response => response.json())
+      .then(data => {
+        ultras = data;
+        const ultraSelect = document.getElementById('ultraSelect');
+        Object.keys(data).forEach(ultra => {
+          const option = document.createElement('option');
+          option.value = ultra;
+          option.textContent = ultra;
+          ultraSelect.appendChild(option);
+        });
+      });
+
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const dungeonName = document.getElementById('dungeonSelect').value;
+      const ultraName = document.getElementById('ultraSelect').value;
+      const luck = Math.min(Math.max(parseInt(document.getElementById('luckInput').value) || 0, 0), 25);
+
+      const dungeon = dungeons.find(d => d.name === dungeonName);
+      const ultra = ultras[ultraName];
+
+      if (!dungeon || !ultra) {
+        document.getElementById('result').textContent = "Please select a dungeon and an ultra.";
+        return;
       }
 
-      function calculateDropRate() {
-        const select = document.getElementById("options");
-        const response = document.getElementById("response");
-        const selectedId = parseInt(select.value, 10);
-        const luck = Math.min(parseInt(document.getElementById("luck").value, 10) || 0, 25);
+      const ultraTickets = ultra.tickets;
+      const totalTickets = dungeon.tickets;
 
-        const item = ultraData.find(u => u.id === selectedId);
+      const dropRate = (100 * ultraTickets / totalTickets) * ((0.0005 * luck) + 0.006);
 
-        if (item) {
-          const dungeon = dungeonData.find(d => d.id === item.drops_in);
-
-          if (dungeon) {
-            const ultraTickets = item.tickets;
-            const dungeonTickets = dungeon.tickets;
-
-            const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * luck) + 0.006);
-
-            response.innerHTML = 
-              `<strong>${item.name}</strong><br><br>` +
-              `Tickets: ${ultraTickets}<br>` +
-              `Drops in: ${item.drops_in.replaceAll("_", " ")}<br><br>` +
-              `With <strong>${luck} LCK</strong>, your drop chance is: <br>` +
-              `<span style="font-size:20px; font-weight:bold;">${dropChance.toFixed(4)}%</span>`;
-          } else {
-            response.innerHTML = 
-              `<strong>${item.name}</strong><br><br>` +
-              `Tickets: ${item.tickets}<br>` +
-              `Drops in: ${item.drops_in.replaceAll("_", " ")}<br><br>` +
-              `⚠ Dungeon data not found.`;
-          }
-        } else {
-          response.innerHTML = "";
-        }
-      }
-
-      loadData();
-    </script>
-  </body>
+      document.getElementById('result').textContent = 
+        `${ultraName} in ${dungeonName}: ${dropRate.toFixed(4)}% chance per run (LCK = ${luck})`;
+    });
+  </script>
+</body>
 </html>
