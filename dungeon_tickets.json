@@ -90,8 +90,58 @@
     "tickets": 21010
   },
   {
-    "name": "All",
-    "id": [8, 9, 21, 22, 24, 25, 32, 33, 36, 45, 48, 50, 51, 53, 54],
+    "name": "Neewe Caves",
+    "id": 8,
+    "tickets": 18010
+  },
+  {
+    "name": "Daragorn's Lair",
+    "id": 9,
+    "tickets": 18010
+  },
+  {
+    "name": "Danma Caverns",
+    "id": 22,
+    "tickets": 18010
+  },
+  {
+    "name": "Fairy Forest",
+    "id": 24,
+    "tickets": 18010
+  },
+  {
+    "name": "Kron Waterfalls",
+    "id": 25,
+    "tickets": 18010
+  },
+  {
+    "name": "Path of the Warrior",
+    "id": 32,
+    "tickets": 18010
+  },
+  {
+    "name": "Feebles Deathtrap",
+    "id": 33,
+    "tickets": 18010
+  },
+  {
+    "name": "Scale Caves",
+    "id": 36,
+    "tickets": 18010
+  },
+  {
+    "name": "Tower Lair",
+    "id": 45,
+    "tickets": 18010
+  },
+  {
+    "name": "Ruins of Kalambria",
+    "id": 48,
+    "tickets": 18010
+  },
+  {
+    "name": "Cursed Cave",
+    "id": 51,
     "tickets": 18010
   }
 ]
