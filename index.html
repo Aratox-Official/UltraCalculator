@@ -76,7 +76,7 @@
       }
 
       select, input[type="number"], button {
-        font-family: Compass, inherit;
+        font-family: Compass;
         padding: 0.5rem 0.75rem;
         font-size: 16px;
         border-radius: 8px;
@@ -87,7 +87,8 @@
       select { width: 100%; }
 
       input[type="number"] {
-        width: 120px;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       button#generateBtn {
