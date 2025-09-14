@@ -300,16 +300,17 @@
           );
         }
 
-        let dropChance, avgRuns;
+        const prettyDungeonName = (dungeon.name || dungeon.id || "").toString().replace(/_/g, " ");
+        const prettyUltraName = ultra.name || ("#" + ultra.id);
+        const prettyDropsIn = (ultra.drops_in || "").toString().replace(/_/g, " ");
 
         if (!dropsMatch) {
-          dropChance = 0;
-          avgRuns = Infinity;
-        } else {
-          dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * luck) + 0.006);
-          avgRuns = (dropChance > 0) ? (100 / dropChance) : Infinity;
+          responseEl.innerHTML = `<div style="color:#ffeb99">It is impossible to get <strong>${prettyUltraName}</strong> from <strong>${prettyDungeonName}</strong>; <strong>${prettyUltraName}</strong> drops only in <strong>${prettyDropsIn || "another dungeon"}</strong>.</div>`;
+          return;
         }
 
+        const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * luck) + 0.006);
+        const avgRuns = (dropChance > 0) ? (100 / dropChance) : Infinity;
         const avgRunsText = formatAverageRuns(avgRuns);
 
         let html = ``;
