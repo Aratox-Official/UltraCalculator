@@ -146,6 +146,18 @@
         </div>
 
         <div class="form-group">
+          <label for="diceSelect">Dice</label>
+          <select id="diceSelect">
+            <option value="0" selected>No dice (+0% LCK)</option>
+            <option value="0.01">Level 1 dice (+1% LCK)</option>
+            <option value="0.02">Level 2 dice (+2% LCK)</option>
+            <option value="0.10">Level 3 dice (+10% LCK)</option>
+            <option value="0.20">Level 4 dice (+20% LCK)</option>
+            <option value="0.50">Level 5 dice (+50% LCK)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="luckInput">Luck (LCK)</label>
           <input id="luckInput" type="number" min="0" max="25" value="0" />
         </div>
@@ -181,6 +193,7 @@
 
       const dungeonSelect = document.getElementById("dungeonSelect");
       const ultraSelect = document.getElementById("ultraSelect");
+      const diceSelect = document.getElementById("diceSelect");
       const luckInput = document.getElementById("luckInput");
       const generateBtn = document.getElementById("generateBtn");
       const responseEl = document.getElementById("response");
@@ -251,6 +264,10 @@
         luck = Math.max(0, Math.min(25, luck));
         luckInput.value = String(luck);
 
+        const diceBonus = parseFloat(diceSelect.value) || 0;
+        let effectiveLuck = Math.floor(luck + luck * diceBonus);
+        effectiveLuck = Math.min(25, effectiveLuck);
+
         if (!dungeonValue || !ultraValue) {
           responseEl.innerHTML = "<strong>Please select both a dungeon and an ultra, then click Generate.</strong>";
           return;
@@ -309,12 +326,14 @@
           return;
         }
 
-        const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * luck) + 0.006);
+        const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * effectiveLuck) + 0.006);
         const avgRuns = (dropChance > 0) ? (100 / dropChance) : Infinity;
         const avgRunsText = formatAverageRuns(avgRuns);
 
         let html = ``;
-        html += `Luck (LCK): <strong>${luck}</strong><br>`;
+        html += `Base Luck (LCK): <strong>${luck}</strong><br>`;
+        html += `Dice Bonus: <strong>${(diceBonus * 100).toFixed(0)}%</strong><br>`;
+        html += `Effective Luck (capped at 25): <strong>${effectiveLuck}</strong><br>`;
         html += `<div style="margin-top:8px;font-size:1.15em">Average runs required: <strong>${avgRunsText}</strong></div>`;
 
         responseEl.innerHTML = html;
