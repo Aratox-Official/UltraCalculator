@@ -124,6 +124,12 @@
         font-size: 14px;
         margin-top: auto;
       }
+
+      .disclaimer {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #ffeb99;
+      }
     </style>
   </head>
 
@@ -322,7 +328,8 @@
         const prettyDropsIn = (ultra.drops_in || "").toString().replace(/_/g, " ");
 
         if (!dropsMatch) {
-          responseEl.innerHTML = `<div style="color:#ffeb99">It is impossible to get <strong>${prettyUltraName}</strong> from <strong>${prettyDungeonName}</strong>; <strong>${prettyUltraName}</strong> drops only in <strong>${prettyDropsIn || "another dungeon"}</strong>.</div>`;
+          responseEl.innerHTML = `<div style="color:#ffeb99">It is impossible to get <strong>${prettyUltraName}</strong> from <strong>${prettyDungeonName}</strong>; <strong>${prettyUltraName}</strong> drops only in <strong>${prettyDropsIn || "another dungeon"}</strong>.</div>
+          <div class="disclaimer">Disclaimer: this is the AVERAGE amount of runs you need to complete; you may need to complete fewer or additional runs in order to obtain this ultra.</div>`;
           return;
         }
 
@@ -331,10 +338,8 @@
         const avgRunsText = formatAverageRuns(avgRuns);
 
         let html = ``;
-        html += `Base Luck (LCK): <strong>${luck}</strong><br>`;
-        html += `Dice Bonus: <strong>${(diceBonus * 100).toFixed(0)}%</strong><br>`;
-        html += `Effective Luck (capped at 25): <strong>${effectiveLuck}</strong><br>`;
         html += `<div style="margin-top:8px;font-size:1.15em">Average runs required: <strong>${avgRunsText}</strong></div>`;
+        html += `<div class="disclaimer">Disclaimer: this is the AVERAGE amount of runs you need to complete; you may need to complete fewer or additional runs in order to obtain this ultra.</div>`;
 
         responseEl.innerHTML = html;
       });
