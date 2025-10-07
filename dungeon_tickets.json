@@ -143,5 +143,10 @@
     "name": "Cursed Cave",
     "id": 51,
     "tickets": 18010
+  },
+  {
+    "name": "Krakopus' Cave",
+    "id": 69,
+    "tickets": 18510
   }
 ]
