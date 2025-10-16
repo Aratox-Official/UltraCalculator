@@ -1,0 +1,123 @@
+@font-face {
+  font-family: Compass;
+  src: url("../../UltraCalculator/compass.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --panel-bg: rgba(115, 147, 179, 0.92);
+  --accent: #7393B3;
+  --text: #111;
+  --btn-color: #8A2BE2;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: Compass, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 0;
+  padding: 0;
+  background-image: url("../../UltraCalculator/gb_stars.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.panel {
+  background: var(--panel-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  color: #fff;
+  margin-top: 0.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+label {
+  display:block;
+  margin-bottom: 6px;
+  font-weight:600;
+}
+
+select, input[type="number"], button {
+  font-family: Compass;
+  padding: 0.5rem 0.75rem;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+select { width: 100%; }
+
+input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button#generateBtn {
+  background: var(--btn-color);
+  color: white;
+  cursor: pointer;
+  font-weight:700;
+  transition: background 0.2s;
+  width: 100%;
+  margin-top: 6px;
+}
+button#generateBtn:hover {
+  background: #6A1BB2;
+}
+button#generateBtn:active { transform: translateY(1px); }
+
+#response {
+  margin-top: 12px;
+  background: rgba(255,255,255,0.06);
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  line-height: 1.4;
+  min-height: 40px;
+}
+
+footer {
+  background-color: var(--accent);
+  color: white;
+  text-align: center;
+  padding: 0.75rem;
+  font-size: 14px;
+  margin-top: auto;
+}
+
+.disclaimer {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffeb99;
+}
