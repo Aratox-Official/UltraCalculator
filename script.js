@@ -15,12 +15,12 @@ function formatAverageRuns(v) {
 let ultraData = [];
 let dungeonData = [];
 
-const dungeonSelect = document.getElementById("dungeonSelect");
 const ultraSelect = document.getElementById("ultraSelect");
 const diceSelect = document.getElementById("diceSelect");
 const luckInput = document.getElementById("luckInput");
 const generateBtn = document.getElementById("generateBtn");
 const responseEl = document.getElementById("response");
+const dungeonDropsInfoEl = document.getElementById("dungeonDropsInfo");
 
 async function loadAllData() {
   try {
@@ -35,31 +35,21 @@ async function loadAllData() {
     ultraData = await uRes.json();
     dungeonData = await dRes.json();
 
-    populateDungeonSelect();
+    dungeonData.sort((a, b) => {
+      const aName = (a.name || a.id || "").toString();
+      const bName = (b.name || b.id || "").toString();
+      return aName.localeCompare(bName);
+    });
+
     populateUltraSelect();
+    
+    dungeonDropsInfoEl.innerHTML = `<strong>Select an Ultra to see where it drops.</strong>`;
+
   } catch (err) {
-    dungeonSelect.innerHTML = '<option>Error loading data</option>';
     ultraSelect.innerHTML = '<option>Error loading data</option>';
     responseEl.textContent = "Error loading JSON files: " + err.message;
     console.error(err);
   }
-}
-
-function populateDungeonSelect() {
-  dungeonData.sort((a, b) => {
-    const aName = (a.name || a.id || "").toString();
-    const bName = (b.name || b.id || "").toString();
-    return aName.localeCompare(bName);
-  });
-
-  dungeonSelect.innerHTML = '<option value="">-- Select a dungeon --</option>';
-  dungeonData.forEach(d => {
-    const display = (d.name || d.id || "").toString().replace(/_/g, " ");
-    const option = document.createElement("option");
-    option.value = d.name || d.id || display;
-    option.textContent = display;
-    dungeonSelect.appendChild(option);
-  });
 }
 
 function populateUltraSelect() {
@@ -73,6 +63,88 @@ function populateUltraSelect() {
   });
 }
 
+function getDungeonDropInfo(ultra) {
+  const ultraDropsIn = (ultra.drops_in || "").toString().toLowerCase();
+
+  if (ultraDropsIn === "" || ultraDropsIn === "all") {
+    return {
+      matchText: "This ultra drops in **all** dungeons.",
+      matchingDungeons: dungeonData
+    };
+  }
+
+  const dropsInSlugs = ultraDropsIn.split(",").map(s => slugify(s.trim()));
+
+  const matchingDungeons = dungeonData.filter(d => {
+    if (!d) return false;
+    const dSlug = slugify(d.name || d.id || "");
+    const dId = (typeof d.id !== "undefined") ? String(d.id) : "";
+    
+    return dropsInSlugs.some(dropSlug => 
+      dropSlug === dSlug || dropSlug === dId
+    );
+  });
+
+  const dungeonNames = matchingDungeons.map(d => 
+    (d.name || d.id || "").toString().replace(/_/g, " ")
+  ).join(", ");
+
+  return {
+    matchText: `This ultra drops in: **${dungeonNames || "Unknown Dungeons"}**`,
+    matchingDungeons: matchingDungeons
+  };
+}
+
+ultraSelect.addEventListener("change", () => {
+    dungeonDropsInfoEl.innerHTML = "";
+    responseEl.innerHTML = "";
+
+    const ultraValue = ultraSelect.value;
+    if (!ultraValue) {
+        dungeonDropsInfoEl.innerHTML = `<strong>Select an Ultra to see where it drops.</strong>`;
+        return;
+    }
+
+    const ultra = ultraData.find(u => {
+        if (!u) return false;
+        if (typeof u.id !== "undefined") return String(u.id) === ultraValue;
+        return u.name === ultraValue;
+    });
+
+    if (!ultra) {
+        dungeonDropsInfoEl.innerHTML = `<strong>Selected ultra not found.</strong>`;
+        return;
+    }
+
+    const { matchText, matchingDungeons } = getDungeonDropInfo(ultra);
+
+    let html = `<p style="margin: 0 0 8px;">${matchText}</p>`;
+    
+    const newSelectId = "calculationDungeonSelect";
+    html += `<div class="form-group" style="margin: 0;">
+                <label for="${newSelectId}">Dungeon for Calculation</label>
+                <select id="${newSelectId}"></select>
+            </div>`;
+    dungeonDropsInfoEl.innerHTML = html;
+
+    const calculationDungeonSelect = document.getElementById(newSelectId);
+    calculationDungeonSelect.innerHTML = '<option value="">-- Select a dungeon to calculate --</option>';
+
+    matchingDungeons.forEach(d => {
+      const display = (d.name || d.id || "").toString().replace(/_/g, " ");
+      const option = document.createElement("option");
+      option.value = d.name || d.id || display; 
+      option.textContent = display;
+      calculationDungeonSelect.appendChild(option);
+    });
+
+    if (matchingDungeons.length === 0) {
+        calculationDungeonSelect.innerHTML = '<option value="">(No known dungeons for this ultra)</option>';
+        calculationDungeonSelect.disabled = true;
+    }
+});
+
+
 generateBtn.addEventListener("click", () => {
   responseEl.innerHTML = "";
 
@@ -80,9 +152,21 @@ generateBtn.addEventListener("click", () => {
     responseEl.textContent = "Data not loaded yet. Please wait a moment and try again.";
     return;
   }
-
-  const dungeonValue = dungeonSelect.value;
+  
   const ultraValue = ultraSelect.value;
+  const calculationDungeonSelect = document.getElementById("calculationDungeonSelect");
+
+  if (!ultraValue) {
+    responseEl.innerHTML = "<strong>Please select an ultra.</strong>";
+    return;
+  }
+  
+  if (!calculationDungeonSelect || !calculationDungeonSelect.value) {
+    responseEl.innerHTML = "<strong>Please select a dungeon for calculation.</strong>";
+    return;
+  }
+  
+  const dungeonValue = calculationDungeonSelect.value;
   let luck = parseInt(luckInput.value, 10);
   if (Number.isNaN(luck)) luck = 0;
   luck = Math.max(0, Math.min(25, luck));
@@ -91,11 +175,6 @@ generateBtn.addEventListener("click", () => {
   const diceBonus = parseFloat(diceSelect.value) || 0;
   let effectiveLuck = Math.floor(luck + luck * diceBonus);
   effectiveLuck = Math.min(25, effectiveLuck);
-
-  if (!dungeonValue || !ultraValue) {
-    responseEl.innerHTML = "<strong>Please select both a dungeon and an ultra, then click Generate.</strong>";
-    return;
-  }
 
   const dungeon = dungeonData.find(d => {
     if (!d) return false;
@@ -115,7 +194,7 @@ generateBtn.addEventListener("click", () => {
     return;
   }
   if (!ultra) {
-    responseEl.innerHTML = `<strong>Selected ultra not found in ultra_names.json.</strong>`;
+    responseEl.innerHTML = `<strong>Selected ultra not found.</strong>`;
     return;
   }
 
@@ -127,35 +206,15 @@ generateBtn.addEventListener("click", () => {
     return;
   }
 
-  const ultraDropsIn = (ultra.drops_in || "").toString().toLowerCase();
-  const dungeonSlug = slugify(dungeon.name || dungeon.id || "");
-
-  let dropsMatch = false;
-  if (ultraDropsIn === "" || ultraDropsIn === "all") {
-    dropsMatch = true;
-  } else {
-    dropsMatch = (
-      ultraDropsIn === dungeonSlug ||
-      ultraDropsIn === String(dungeon.id) ||
-      slugify(ultraDropsIn) === dungeonSlug
-    );
-  }
-
   const prettyDungeonName = (dungeon.name || dungeon.id || "").toString().replace(/_/g, " ");
   const prettyUltraName = ultra.name || ("#" + ultra.id);
-  const prettyDropsIn = (ultra.drops_in || "").toString().replace(/_/g, " ");
-
-  if (!dropsMatch) {
-    responseEl.innerHTML = `<div style="color:#ffeb99">It is impossible to get <strong>${prettyUltraName}</strong> from <strong>${prettyDungeonName}</strong>; <strong>${prettyUltraName}</strong> drops only in <strong>${prettyDropsIn || "another dungeon"}</strong>.</div>
-    <div class="disclaimer">Disclaimer: this is the AVERAGE amount of runs you need to complete; you may need to complete fewer or additional runs in order to obtain this ultra.</div>`;
-    return;
-  }
 
   const dropChance = (100 * ultraTickets / dungeonTickets) * ((0.0005 * effectiveLuck) + 0.006);
   const avgRuns = (dropChance > 0) ? (100 / dropChance) : Infinity;
   const avgRunsText = formatAverageRuns(avgRuns);
 
   let html = ``;
+  html += `<h3>${prettyUltraName} from ${prettyDungeonName}</h3>`;
   html += `<div style="margin-top:8px;font-size:1.15em">Average runs required: <strong>${avgRunsText}</strong></div>`;
   html += `<div class="disclaimer">Disclaimer: this is the AVERAGE amount of runs you need to complete; you may need to complete fewer or additional runs in order to obtain this ultra.</div>`;
 
