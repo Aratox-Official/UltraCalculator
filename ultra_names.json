@@ -1,5 +1,11 @@
 [
     {
+        "name": "Prismatic Cloud",
+        "id": 275,
+        "tickets": 250,
+        "drops_in": "feebles_deathtrap"
+    },
+    {
         "name": "GoBattle Ring",
         "id": 68,
         "tickets": 250,
